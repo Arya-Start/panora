@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:panora/screens/home_screen.dart';
+import 'package:panora/screens/host.dart';
 import 'package:panora/themes/themes.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -23,7 +23,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   onDoneLoading() async {
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => HostView()));
   }
 
   @override

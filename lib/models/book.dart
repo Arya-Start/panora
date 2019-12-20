@@ -1,61 +1,85 @@
-class Book {
-  String _title;
-  String _author;
-  double _price;
-  int _page;
-  String _size;
-  String _category;
-  String _imgUrl;
-  String _body;
+import 'package:flutter/foundation.dart';
+import 'package:panora/imp.dart';
 
-  Book(this._title, this._author, this._price, this._page, this._size,
-      this._category, this._imgUrl, this._body);
+class Book with ChangeNotifier {
+  String title;
+  String author;
+  double price;
+  int page;
+  String size;
+  String category;
+  String imgUrl;
+  String body;
+  int quantity;
 
-  String get getCategory => _category;
+  Book(
+      {this.title,
+      this.author,
+      this.price,
+      this.page,
+      this.size,
+      this.category,
+      this.imgUrl,
+      this.body,
+      this.quantity});
 
-  set category(String value) {
-    _category = value;
+  String get getCategory => category;
+
+  set setCategory(String value) {
+    category = value;
   }
 
-  String get getSize => _size;
+  String get getSize => size;
 
-  set size(String value) {
-    _size = value;
+  set setSize(String value) {
+    size = value;
   }
 
-  int get getPage => _page;
+  int get getPage => page;
 
-  set page(int value) {
-    _page = value;
+  set setPage(int value) {
+    page = value;
   }
 
-  double get getPrice => _price;
+  double get getPrice => price;
 
-  set price(double value) {
-    _price = value;
+  set setPrice(double value) {
+    price = value;
   }
 
-  String get getAuthor => _author;
+  String get getAuthor => author;
 
-  set author(String value) {
-    _author = value;
+  set setAuthor(String value) {
+    author = value;
   }
 
-  String get getTitle => _title;
+  String get getTitle => title;
 
-  set title(String value) {
-    _title = value;
+  set setTitle(String value) {
+    title = value;
   }
 
-  String get getImgUrl => _imgUrl;
+  String get getImgUrl => imgUrl;
 
-  set imgUrl(String value) {
-    _imgUrl = value;
+  set setImgUrl(String value) {
+    imgUrl = value;
   }
 
-  String get getBody => _body;
+  String get getBody => body;
 
-  set body(String value) {
-    _body = value;
+  int get getQuantity => quantity;
+
+  set setQuantity(int q) {
+    quantity = q;
+    notifyListeners();
+  }
+
+  set setBody(String value) {
+    body = value;
+  }
+
+  @override
+  String toString() {
+    return 'Book{title: $title, author: $author, price: $price, page: $page, size: $size, category: $category, imgUrl: $imgUrl, body: $body, quantity: $quantity}';
   }
 }
