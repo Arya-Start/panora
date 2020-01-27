@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider<Book>(create: (context) => Book()),
           Provider<Cart>(create: (context) => Cart()),
+          Provider<Author>(create: (context) => Author()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

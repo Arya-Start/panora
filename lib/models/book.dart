@@ -4,13 +4,14 @@ import 'package:panora/imp.dart';
 class Book with ChangeNotifier {
   String title;
   String author;
-  double price;
+  int price;
   int page;
   String size;
   String category;
   String imgUrl;
   String body;
   int quantity;
+  int _subtotal;
 
   Book(
       {this.title,
@@ -22,11 +23,16 @@ class Book with ChangeNotifier {
       this.imgUrl,
       this.body,
       this.quantity});
+  int get getSubTotal => _subtotal;
+  set setSubTotal(int value) {
+    _subtotal = value;
+  }
 
   String get getCategory => category;
 
   set setCategory(String value) {
     category = value;
+    notifyListeners();
   }
 
   String get getSize => size;
@@ -41,9 +47,9 @@ class Book with ChangeNotifier {
     page = value;
   }
 
-  double get getPrice => price;
+  int get getPrice => price;
 
-  set setPrice(double value) {
+  set setPrice(int value) {
     price = value;
   }
 

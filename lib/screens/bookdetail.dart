@@ -24,7 +24,7 @@ class _BookDetailState extends State<BookDetail> {
       body: Column(
         children: <Widget>[
           Container(
-            height: 180,
+            height: 220,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[

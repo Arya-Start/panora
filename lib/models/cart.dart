@@ -3,6 +3,7 @@ import 'package:panora/imp.dart';
 
 class Cart with ChangeNotifier {
   List<Book> _bookList = [];
+  int _totalPrice = 0;
 
   List<Book> get getBookList => _bookList;
 
@@ -15,6 +16,12 @@ class Cart with ChangeNotifier {
     _bookList.add(book);
   }
 
+  void setTotalPrice(int price, int quantity) {
+    _totalPrice += price * quantity;
+    notifyListeners();
+  }
+
+  get getTotalPrice => _totalPrice;
   @override
   String toString() {
     return 'Cart{bookList: $_bookList}';

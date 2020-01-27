@@ -29,7 +29,7 @@ class _MBookDetailState extends State<MBookDetail> {
                       style: TextStyle(color: Colors.black),
                     ),
                     backgroundColor: Colors.white,
-                    expandedHeight: 300.0,
+                    expandedHeight: 320.0,
                     floating: false,
                     iconTheme: IconThemeData(color: Colors.black),
                     pinned: true,
@@ -133,18 +133,11 @@ class _MBookDetailState extends State<MBookDetail> {
                   widget.book.quantity = _itemCount;
 
                   orders.addBook(widget.book);
-                  // list.add(widget.book);
-                  // orders.setBookList = list.add(
-                  // print(orders.bookList.length);
-                  // print(orders.bookList.length);
-                  // orders.bookList.add(widget.book);
-                  /////*****************///////
+                  orders.setTotalPrice(widget.book.price.toInt(), _itemCount);
+                  widget.book.setSubTotal = widget.book.price * _itemCount;
 
                   print('Lize ${orders.getBookList.length}');
                   print(orders.getBookList.toString());
-                  /* print(list[0].getPrice);
-                  print(list[0].getQuantity);
-                  print(orders.getBookList[0].getQuantity);*/
 
                   /////*****************///////
                   showDialog(
