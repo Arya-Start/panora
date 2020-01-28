@@ -152,14 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
           category: '',
           body: kBody1),
     ];
-    List<Author> authors = [
-      Author.info('Chit OO Nyo', List<Book>()),
-      Author.info('Ko Tar', List<Book>()),
-      Author.info('Jhon Smith', List<Book>()),
-      Author.info('Tar Yar Min Wai', List<Book>()),
-      Author.info('Min Lu', List<Book>()),
-      Author.info('Dr Ma Tin Win', List<Book>()),
-    ];
+
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(

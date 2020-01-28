@@ -136,7 +136,6 @@ class _MBookDetailState extends State<MBookDetail> {
                       color: Colors.white, fontWeight: FontWeight.w900),
                 ),
                 onPressed: () {
-                  List<Book> list = [];
                   widget.book.quantity = _itemCount;
 
                   orders.addBook(widget.book);
