@@ -18,6 +18,9 @@ class SearchDeleGate extends SearchDelegate {
   }
 
   @override
+  String get searchFieldLabel => 'book,author etc';
+
+  @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
       tooltip: 'Back',
@@ -33,7 +36,11 @@ class SearchDeleGate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    return Container(
+      child: Center(
+        child: Text(query),
+      ),
+    );
   }
 
   @override
