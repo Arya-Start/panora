@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 class MBookDetail extends StatefulWidget {
   final Book book;
-
-  MBookDetail({this.book});
+  final Function onBack;
+  MBookDetail({this.book, this.onBack});
 
   @override
   _MBookDetailState createState() => _MBookDetailState();
@@ -24,9 +24,16 @@ class _MBookDetailState extends State<MBookDetail> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
-                    title: Text(
-                      'Book Detail',
-                      style: TextStyle(color: Colors.black),
+                    title: Row(
+                      children: <Widget>[
+                        IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: widget.onBack),
+                        Text(
+                          'Book Detail',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
                     ),
                     backgroundColor: Colors.white,
                     expandedHeight: 320.0,

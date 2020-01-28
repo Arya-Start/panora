@@ -29,6 +29,7 @@ class _HostViewState extends State<HostView> {
     return Scaffold(
       body: _widgetOptions[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         elevation: 3.0,
         items: [
           BottomNavigationBarItem(
@@ -49,7 +50,8 @@ class _HostViewState extends State<HostView> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.black54,
+        unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),
     );
