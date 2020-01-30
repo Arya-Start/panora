@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:panora/screens/author_screen.dart';
 import 'package:panora/screens/cart_screen.dart';
 import 'package:panora/screens/categories.dart';
-import 'package:panora/screens/home_screen.dart';
+import 'package:panora/screens/home/home_screen.dart';
 
 class HostView extends StatefulWidget {
   @override

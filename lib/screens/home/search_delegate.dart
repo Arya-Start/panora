@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:panora/provider/response_provider.dart';
 
 class SearchDeleGate extends SearchDelegate {
+  final ResponseProvider response;
+  SearchDeleGate({this.response});
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -45,8 +48,16 @@ class SearchDeleGate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    response.fetchData(query);
     return Container(
-      child: Text(query),
+      child: response.isHas()
+          ? Center(
+              child: Text(
+                  '${response.getAllData().getAuthors.length}\n ${response.getAllData().getBooks.length}'),
+            )
+          : Center(
+              child: Text('No Data'),
+            ),
     );
   }
 }

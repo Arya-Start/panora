@@ -1,8 +1,10 @@
 import 'package:panora/imp.dart';
-import 'package:panora/screens/search_delegate.dart';
+import 'package:panora/provider/response_provider.dart';
+import 'package:panora/screens/home/search_delegate.dart';
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import 'sliver_book_detail.dart';
+import '../sliver_book_detail.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -58,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final SearchDelegate _delegate = SearchDeleGate();
+    final response = Provider.of<ResponseProvider>(context);
+    final SearchDelegate _delegate = SearchDeleGate(response: response);
 
     List<Book> bookItems = [
       Book(

@@ -11,9 +11,10 @@ class ResponseProvider with ChangeNotifier {
 
   Future<bool> fetchData(query) async {
     setLoading(true);
-
+    print('Query :: $query');
     await ApiRequest().mSearch(query).then((data) {
       setLoading(false);
+      print('You Should not loading...');
 
       if (data.statusCode == 200) {
         setAllData(Response.fromJson(json.decode(data.body)));
