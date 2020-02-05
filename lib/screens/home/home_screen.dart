@@ -1,10 +1,10 @@
 import 'package:panora/imp.dart';
-import 'package:panora/provider/response_provider.dart';
-import 'package:panora/screens/home/search_delegate.dart';
-import 'package:provider/provider.dart';
+import 'package:panora/screens/home/my_search.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../sliver_book_detail.dart';
+import '../exit_dialog.dart';
+import 'book_detail.dart';
+import 'home_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -26,24 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            title: Text('Are You Sure!'),
-            content: Text("Exit"),
-            actions: <Widget>[
-              FlatButton(
-                child: Text("No"),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-              ),
-              FlatButton(
-                child: Text("Yes"),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-            ],
-          );
+          return Exit_dialog();
         },
       );
     } else {
@@ -60,9 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final response = Provider.of<ResponseProvider>(context);
-    final SearchDelegate _delegate = SearchDeleGate(response: response);
-
     List<Book> bookItems = [
       Book(
           title: 'Game Of Throne',
@@ -166,7 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconButton(
                         icon: Icon(Icons.search),
                         onPressed: () {
-                          showSearch(context: context, delegate: _delegate);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MySearch()));
                         },
                       )
                     ],
@@ -187,31 +168,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 10,
                         ),
                         //  SearchText(),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Popular Books',
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.left,
-                          ),
+                        HomeTitle(
+                          title: 'Popular Books',
                         ),
                         horizontalList(bookItems),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Latesd Books',
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.left,
-                          ),
+                        HomeTitle(
+                          title: 'Lasted Books',
                         ),
                         horizontalList(bookItems)
                       ],
                     ),
                   ),
                 )
-              : MBookDetail(
+              : BookDetail(
                   book: bookItems[idx],
                   onBack: _onBackPressed,
                 )),

@@ -2,16 +2,16 @@ import 'package:panora/imp.dart';
 import 'package:panora/models/cart.dart';
 import 'package:provider/provider.dart';
 
-class MBookDetail extends StatefulWidget {
+class BookDetail extends StatefulWidget {
   final Book book;
   final Function onBack;
-  MBookDetail({this.book, this.onBack});
+  BookDetail({this.book, this.onBack});
 
   @override
-  _MBookDetailState createState() => _MBookDetailState();
+  _BookDetailState createState() => _BookDetailState();
 }
 
-class _MBookDetailState extends State<MBookDetail> {
+class _BookDetailState extends State<BookDetail> {
   var top = 0.0;
   int _itemCount = 1;
   @override

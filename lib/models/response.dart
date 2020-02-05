@@ -1,29 +1,35 @@
 class Response {
-  List<Books> _books;
-  List<Authors> _authors;
+  List<Book> _books;
+  List<Author> _authors;
 
-  Response({List<Books> books, List<Authors> authors}) {
+  Response({List<Book> books, List<Author> authors}) {
     this._books = books;
     this._authors = authors;
   }
 
-  List<Books> get getBooks => _books;
-  set setBooks(List<Books> books) => _books = books;
+  List<Book> get getBooks {
+    return _books == null ? [] : _books;
+  }
 
-  List<Authors> get getAuthors => _authors;
-  set setAuthors(List<Authors> authors) => _authors = authors;
+  set setBooks(List<Book> books) => _books = books;
+
+  List<Author> get getAuthors {
+    return _authors == null ? [] : _authors;
+  }
+
+  set setAuthors(List<Author> authors) => _authors = authors;
 
   Response.fromJson(Map<String, dynamic> json) {
     if (json['books'] != null) {
-      _books = new List<Books>();
+      _books = new List<Book>();
       json['books'].forEach((v) {
-        _books.add(new Books.fromJson(v));
+        _books.add(new Book.fromJson(v));
       });
     }
     if (json['authors'] != null) {
-      _authors = new List<Authors>();
+      _authors = new List<Author>();
       json['authors'].forEach((v) {
-        _authors.add(new Authors.fromJson(v));
+        _authors.add(new Author.fromJson(v));
       });
     }
   }
@@ -38,14 +44,19 @@ class Response {
     }
     return data;
   }
+
+  void clear() {
+    _books.clear();
+    _authors.clear();
+  }
 }
 
-class Books {
+class Author {
   int _id;
   String _name;
   String _profileImg;
 
-  Books({int id, String name, String profileImg}) {
+  Author({int id, String name, String profileImg}) {
     this._id = id;
     this._name = name;
     this._profileImg = profileImg;
@@ -58,7 +69,7 @@ class Books {
   String get profileImg => _profileImg;
   set profileImg(String profileImg) => _profileImg = profileImg;
 
-  Books.fromJson(Map<String, dynamic> json) {
+  Author.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _name = json['name'];
     _profileImg = json['profileImg'];
@@ -73,12 +84,12 @@ class Books {
   }
 }
 
-class Authors {
+class Book {
   int _id;
   String _title;
   String _imgUrl;
 
-  Authors({int id, String title, String imgUrl}) {
+  Book({int id, String title, String imgUrl}) {
     this._id = id;
     this._title = title;
     this._imgUrl = imgUrl;
@@ -91,7 +102,7 @@ class Authors {
   String get imgUrl => _imgUrl;
   set imgUrl(String imgUrl) => _imgUrl = imgUrl;
 
-  Authors.fromJson(Map<String, dynamic> json) {
+  Book.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _title = json['title'];
     _imgUrl = json['imgUrl'];

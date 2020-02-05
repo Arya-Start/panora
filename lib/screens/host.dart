@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:panora/screens/author_screen.dart';
+import 'package:panora/screens/bottom_navigationbar.dart';
 import 'package:panora/screens/cart_screen.dart';
 import 'package:panora/screens/categories.dart';
-import 'package:panora/screens/home/home_screen.dart';
+
+import 'author/author_screen.dart';
+import 'home/home_screen.dart';
 
 class HostView extends StatefulWidget {
   @override
@@ -14,7 +16,7 @@ class _HostViewState extends State<HostView> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    AuthorScreen(),
+   AuthorScreen(),
     Categories(),
     CartScreen(),
   ];
@@ -27,33 +29,7 @@ class _HostViewState extends State<HostView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _widgetOptions[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        elevation: 3.0,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.mode_edit),
-            title: Text('Author'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            title: Text('Categories'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            title: Text('Cart'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black54,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-      ),
-    );
+        body: _widgetOptions[_selectedIndex],
+        bottomNavigationBar: MyBottomNav(_selectedIndex, _onItemTapped));
   }
 }

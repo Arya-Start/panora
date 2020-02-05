@@ -1,4 +1,5 @@
 import 'package:panora/models/cart.dart';
+import 'package:panora/provider/author_provider.dart';
 import 'package:panora/provider/response_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
           Provider<Cart>(create: (context) => Cart()),
           Provider<Author>(create: (context) => Author()),
           Provider<ResponseProvider>(create: (context) => ResponseProvider()),
+          Provider<AuthorProvider>(create: (context) => AuthorProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
