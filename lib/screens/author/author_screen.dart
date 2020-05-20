@@ -100,7 +100,6 @@ class _AuthorScreenState extends State<AuthorScreen> {
   }
 
   Widget verticalList(AuthorProvider ap, context) {
-    //final size = ap.getAuthor().length;
     return ap.isHas()
         ? ap.getAuthor().length > 0
             ? ListView.builder(
