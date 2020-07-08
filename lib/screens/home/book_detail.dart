@@ -1,231 +1,194 @@
-import 'package:panora/imp.dart';
-import 'package:panora/models/cart.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:panora/models/book.dart';
+import 'package:panora/themes/themes.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class BookDetail extends StatefulWidget {
   final Book book;
-  final Function onBack;
-  BookDetail({this.book, this.onBack});
+
+  const BookDetail({this.book});
 
   @override
   _BookDetailState createState() => _BookDetailState();
 }
 
 class _BookDetailState extends State<BookDetail> {
-  var top = 0.0;
-  int _itemCount = 1;
+  var genres = ["History", "Biography", "Haha", "hehe", "hoho"];
   @override
   Widget build(BuildContext context) {
-    final orders = Provider.of<Cart>(context);
-
     return Scaffold(
-        body: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                    title: Row(
-                      children: <Widget>[
-                        IconButton(
-                            icon: Icon(Icons.arrow_back),
-                            onPressed: widget.onBack),
-                        Text(
-                          'Book Detail',
-                          style: TextStyle(color: Colors.black),
+      appBar: AppBar(
+        title: const Text(
+          "Book Detail",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {})
+        ],
+      ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Card(
+                  margin: EdgeInsets.zero,
+                  child: Container(
+                    color: Color(0xFFECF0F1),
+                    height: 260,
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(
+                          height: 30,
                         ),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildBookSideCard(),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              buildTitleSideCard()
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        buildAddToCartBtn()
                       ],
                     ),
-                    backgroundColor: Colors.white,
-                    expandedHeight: 320.0,
-                    floating: false,
-                    iconTheme: IconThemeData(color: Colors.black),
-                    pinned: true,
-                    snap: false,
-                    flexibleSpace: buildLayoutBuilder(orders)),
-              ];
-            },
-            body: SingleChildScrollView(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Descriptions :',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(widget.book.getBody),
-                ],
-              ),
-            ))));
-  }
-
-  LayoutBuilder buildLayoutBuilder(Cart orders) {
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      top = constraints.biggest.height;
-      return FlexibleSpaceBar(
-          centerTitle: false,
-          title: AnimatedOpacity(
-              duration: Duration(milliseconds: 300),
-              //opacity: top == 80.0 ? 1.0 : 0.0,
-              opacity: 1.0,
-              child: top == 80.0
-                  ? Text(
-                      '',
-                      style: TextStyle(fontSize: 16.0, color: Colors.black38),
-                    )
-                  : Text('')),
-          background: Padding(
-            padding: const EdgeInsets.only(top: 80.0, bottom: 5),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 8.0, right: 8.0, left: 8.0),
-                  child: Image.network(
-                    widget.book.getImgUrl,
-                    width: 120,
-                    height: 180,
-                  ),
-                ),
-                Expanded(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    buildBookDetailRow('Book Title', widget.book.getTitle),
-                    buildBookDetailRow('Author', widget.book.getAuthor),
-                    buildBookDetailRow('Page', widget.book.getPage.toString()),
-                    buildBookDetailRow('Size', widget.book.getSize),
-                    buildBookDetailRow('Category', widget.book.getCategory),
-                    buildBookDetailRow(
-                        'Price', widget.book.getPrice.toString()),
-                    buildBookDetailRow(
-                        'Quantity', widget.book.getPrice.toString()),
-                    buildQuantityRow(),
-                    buildAddToCartBtn(orders, context),
-                  ],
-                ))
-              ],
-            ),
-          ));
-    });
-  }
-
-  Row buildAddToCartBtn(Cart orders, BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-            child: RaisedButton(
-                color: Colors.amber[800],
+                  )),
+              Container(
+                margin: EdgeInsets.only(left: 30, top: 10, right: 30),
                 child: Text(
-                  'Add To Cart',
+                  "Descriptions",
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w900),
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {
-                  widget.book.quantity = _itemCount;
-
-                  orders.addBook(widget.book);
-                  orders.setTotalPrice(widget.book.price.toInt(), _itemCount);
-                  widget.book.setSubTotal = widget.book.price * _itemCount;
-
-                  print('Lize ${orders.getBookList.length}');
-                  print(orders.getBookList.toString());
-
-                  /////*****************///////
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return buildSuccessDialog(context);
-                    },
-                  );
-                }),
-          ),
-        ),
-      ],
-    );
-  }
-
-  AlertDialog buildSuccessDialog(BuildContext context) {
-    return AlertDialog(
-      title: Text('Title'),
-      content: Text('Successfully Added'),
-      actions: <Widget>[
-        FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('Close'))
-      ],
-    );
-  }
-
-  Row buildQuantityRow() {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Text('Quantity'),
-          flex: 1,
-        ),
-        Expanded(
-          flex: 1,
-          child: Row(
-            children: <Widget>[
-              _itemCount > 1
-                  ? RawMaterialButton(
-                      onPressed: () => setState(() => _itemCount--),
-                      padding: EdgeInsets.all(5.0),
-                      child: Icon(Icons.remove),
-                      constraints: BoxConstraints(maxWidth: 50),
-                      fillColor: Colors.grey[300],
-                    )
-                  : RawMaterialButton(
-                      onPressed: () {},
-                      padding: EdgeInsets.all(5.0),
-                      child: Icon(Icons.remove),
-                      constraints: BoxConstraints(maxWidth: 50),
-                      fillColor: Colors.grey[300],
-                    ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                child: Text(_itemCount.toString()),
               ),
-              RawMaterialButton(
-                onPressed: () => setState(() => _itemCount++),
-                padding: EdgeInsets.all(5.0),
-                child: Icon(Icons.add),
-                constraints: BoxConstraints(maxWidth: 50),
-                fillColor: Colors.grey[300],
-              ),
+              Container(
+                  margin: EdgeInsets.only(left: 30, top: 5, right: 30),
+                  child: Divider(
+                    height: 1,
+                    thickness: 1.0,
+                    color: Colors.black,
+                  )),
+              Container(
+                 margin: EdgeInsets.only(left: 35, top: 5, right: 30),
+                child: Text(kBody1))
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 
-  Row buildBookDetailRow(String key, String value) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Text('$key'),
-          flex: 1,
-        ),
-        Expanded(flex: 1, child: Text('$value')),
-      ],
+  Container buildAddToCartBtn() {
+    return Container(
+      height: 45,
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      child: RaisedButton(
+          color: Color(0xFF3498db),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          child: Text(
+            "Add To Card",
+            style: TextStyle(
+                color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          onPressed: () {}),
+    );
+  }
+
+  Card buildBookSideCard() {
+    return Card(
+      elevation: 5,
+      margin: EdgeInsets.zero,
+      child: FadeInImage.memoryNetwork(
+        placeholder: kTransparentImage,
+        image: widget.book.getImgUrl,
+        height: 150.0,
+        width: 100.0,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Expanded buildTitleSideCard() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            "ရေသေအိုင်",
+            style: TextStyle(
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text("လင်းခါး"),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            "5000 ks",
+            style: TextStyle(color: Color(0xff2ecc71), fontSize: 16),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text("Size          -         5.6x1.2 inches",
+              style: TextStyle(color: Colors.black)),
+          SizedBox(
+            height: 10,
+          ),
+          Text("Pages      -        176"),
+          SizedBox(
+            height: 8,
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("Genre     -      "),
+              Expanded(
+                child: Container(
+                  height: 20,
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children: genres
+                        .map((e) => Container(
+                              margin: EdgeInsets.symmetric(horizontal: 1),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 3),
+                              decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Center(
+                                  child: Text(
+                                e,
+                                style: TextStyle(color: Colors.black),
+                              )),
+                            ))
+                        .toList(),
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 }

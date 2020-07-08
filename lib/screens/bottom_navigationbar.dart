@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyBottomNav extends StatelessWidget {
   final int index;
- final Function _onTapped;
+  final Function _onTapped;
 
   MyBottomNav(this.index, this._onTapped);
   @override
@@ -16,12 +16,12 @@ class MyBottomNav extends StatelessWidget {
           title: Text('Home'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.mode_edit),
-          title: Text('Author'),
+          icon: Icon(Icons.apps),
+          title: Text('Genres'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.category),
-          title: Text('Categories'),
+          icon: Icon(Icons.remove_from_queue),
+          title: Text('Request'),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.shopping_cart),
@@ -29,7 +29,7 @@ class MyBottomNav extends StatelessWidget {
         ),
       ],
       currentIndex: index,
-      selectedItemColor: Colors.black54,
+      selectedItemColor: Colors.black,
       unselectedItemColor: Colors.grey,
       onTap: _onTapped,
     );

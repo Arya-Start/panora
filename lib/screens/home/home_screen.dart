@@ -2,7 +2,6 @@ import 'package:panora/imp.dart';
 import 'package:panora/screens/home/my_search.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../exit_dialog.dart';
 import 'book_detail.dart';
 import 'home_helper.dart';
 
@@ -12,40 +11,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int idx;
-  bool isHome = true;
 
-  goToDetail({int index}) {
-    isHome = !isHome;
-    idx = index;
-    setState(() {});
-  }
-
-  Future<bool> _onBackPressed() {
-    if (isHome) {
-      return showDialog(
-        context: context,
-        builder: (context) {
-          return Exit_dialog();
-        },
-      );
-    } else {
-      return _goHome();
-    }
-  }
-
-  Future<bool> _goHome() {
-    setState(() {
-      isHome = !isHome;
-    });
-    return Future.value(false);
-  }
 
   @override
   Widget build(BuildContext context) {
     List<Book> bookItems = [
       Book(
-          title: 'Game Of Throne',
+          title: 'ယခုပဲ ပစ္စုပ္ပန်မှာနေလိုက်ပါ',
           author: 'Jhon Snow',
           imgUrl: 'https://picsum.photos/id/23/200/300',
           page: 234,
@@ -136,100 +108,98 @@ class _HomeScreenState extends State<HomeScreen> {
           body: kBody1),
     ];
 
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Scaffold(
-          body: isHome
-              ? Scaffold(
-                  appBar: AppBar(
-                    actions: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => MySearch()));
-                        },
-                      )
-                    ],
-                    backgroundColor: Colors.white,
-                    iconTheme: IconThemeData(color: Colors.black),
-                    title: Text(
-                      'PANORA',
-                      style: kTitleText,
-                    ),
-                  ),
-                  body: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 10,
-                        ),
-                        //  SearchText(),
-                        HomeTitle(
-                          title: 'Popular Books',
-                        ),
-                        horizontalList(bookItems),
-                        HomeTitle(
-                          title: 'Lasted Books',
-                        ),
-                        horizontalList(bookItems)
-                      ],
-                    ),
-                  ),
-                )
-              : BookDetail(
-                  book: bookItems[idx],
-                  onBack: _onBackPressed,
-                )),
-    );
+    return Scaffold(
+        body: Scaffold(
+      backgroundColor: Color(0xFFECF0F1),
+      appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MySearch()));
+              },
+            )
+          ],
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.black),
+          title: Container(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            height: 30,
+            width: 100,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.fitWidth,
+                    image: AssetImage("image/logo.png"))),
+          )),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(
+              height: 10,
+            ),
+            //  SearchText(),
+            HomeTitle(
+              title: 'Popular Books',
+            ),
+            horizontalList(bookItems),
+            HomeTitle(
+              title: 'Latest Books',
+            ),
+            horizontalList(bookItems)
+          ],
+        ),
+      ),
+     // bottomNavigationBar: MyBottomNav(_selectedIndex, _onItemTapped),
+    ));
   }
 
   Widget bookCart(List<Book> items, int idx, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: GestureDetector(
-        onTap: () {
-          goToDetail(index: idx);
-        },
-        child: Container(
-          width: 130.0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Card(
-                elevation: 4.0,
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: items[idx].getImgUrl,
-                    height: 180.0,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => BookDetail(
+                  book: items[idx],
+                )));
+      },
+      child: Container(
+        width: 115.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Card(
+              margin: EdgeInsets.zero,
+              elevation: 4.0,
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: items[idx].getImgUrl,
+                height: 130.0,
+                width: 100,
+                fit: BoxFit.cover,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Text(
-                  items[idx].getTitle,
-                  maxLines: 1,
-                  style: kTitleTextStyle,
-                ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 5, bottom: 5),
+              child: Text(
+                items[idx].getTitle,
+                maxLines: 1,
+                style: kTitleTextStyle,
+                overflow: TextOverflow.ellipsis,
               ),
-              //Text(items[idx].getAuthor),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Text(
-                  items[idx].getPrice.toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+            ),
+            Container(
+              child: Text(
+                items[idx].getPrice.toString() + " ks",
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -237,7 +207,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget horizontalList(List<Book> items) {
     return Container(
-      height: 255,
+      margin: EdgeInsets.only(left: 15),
+      height: 200,
       child: ListView.builder(
         itemCount: items.length,
         scrollDirection: Axis.horizontal,
@@ -247,25 +218,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-Widget verticalList(List<Author> items) {
-  return Expanded(
-    child: ListView.builder(
-      itemCount: items.length,
-      itemBuilder: (context, i) {
-        return authorCart(items, i);
-      },
-    ),
-  );
-}
-
-Widget authorCart(List<Author> items, int idx) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Text(
-      items[idx].getName,
-      style: TextStyle(fontSize: 18),
-    ),
-  );
 }

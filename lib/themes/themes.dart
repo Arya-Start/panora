@@ -11,7 +11,7 @@ TextStyle searchTextStyle = TextStyle(color: Colors.black38, fontSize: 16.0);
 TextStyle hintStyle = TextStyle(color: Colors.black38, fontSize: 16.0);
 TextStyle choiceTextStyle = TextStyle(color: Colors.red, fontSize: 16.0);
 TextStyle kTitleText = TextStyle(color: Colors.black);
-TextStyle kTitleTextStyle = TextStyle(color: Colors.black38, fontSize: 16);
+TextStyle kTitleTextStyle = TextStyle(color: Colors.black, fontSize: 14,fontWeight: FontWeight.bold,);
 TextStyle kEmptyTextStyle = TextStyle(color: Colors.black54, fontSize: 20);
 
 const kBody1 = """

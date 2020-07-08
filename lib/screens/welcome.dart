@@ -1,47 +1,24 @@
 import 'dart:async';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:panora/screens/host.dart';
-import 'package:panora/themes/themes.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
-}
+import 'host.dart';
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  Future<Timer> loadData() async {
-    return Timer(Duration(seconds: 3), onDoneLoading);
-  }
-
-  onDoneLoading() async {
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => HostView()));
-  }
-
+class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Timer(
+        Duration(seconds: 3),
+        () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => HostView())));
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: null,
       body: Container(
-        child: Center(
-          child: TyperAnimatedTextKit(
-            //duration: Duration(seconds: 2 ),
-            isRepeatingAnimation: false,
-            textStyle: flashscreenTextStyle,
-            text: ['PANORA'],
-            alignment: Alignment.center,
-          ),
-          // child: Text('${controller.value.toInt()}%',style: flashscreenTextStyle,),
-        ),
+        margin: EdgeInsets.symmetric(horizontal: 80),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.fitWidth, image: AssetImage("image/logo.png"))),
       ),
     );
   }
